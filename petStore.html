@@ -6,14 +6,21 @@
     <title>Vue.js Pet Depot</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
     <script src=" products.js"></script>
+    <link rel="manifest" href="petstore.webmanifest">
     <style>
-        .product{
+        .product {
             border: 1px grey solid;
             padding: 20px;
             margin: 20px;
             text-align: center;
         }
     </style>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        }; 
+    </script>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
 </head>
@@ -55,7 +62,8 @@
                         Add To Cart
                     </button>
                     <span v-if="product.availableInventory === cartCount(product.id)">All out!</span>
-                    <span v-else-if="product.availableInventory - cartCount(product.id) < 5">Only {{product.availableInventory -
+                    <span v-else-if="product.availableInventory - cartCount(product.id) < 5">Only
+                        {{product.availableInventory -
                         cartCount(product.id)}} left!</span>
                     <span v-else>Buy now!</span>
 
@@ -70,7 +78,7 @@
                     cart empty
                 </div>
                 <div>
-                    
+
                 </div>
                 <!--CHECKOUT INFORMATION-->
                 <h2>Checkout</h2>
@@ -226,14 +234,14 @@
                     //its value when calculated
                     return this.cart.length || '';
                 },
-                sortedProducts(){
+                sortedProducts() {
                     let productsArray = this.products.slice(0);
-                    function compare(a,b) {
+                    function compare(a, b) {
                         if (a.price > b.price)
-                        return 1;
+                            return 1;
                         if (a.price < b.price)
-                        return -1;
-                    return 0;
+                            return -1;
+                        return 0;
                     }
                     return productsArray.sort(compare);
                 }
